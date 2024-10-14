@@ -8,6 +8,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: cypress-io/github-action@v6
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
         with:
           browser: chrome
+
+      - name: Upload Cypress Report
+        if: always() # Certifique-se de que o relatório será salvo mesmo se os testes falharem
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-report # Nome do artifact
+          path: cypress/reports # Caminho onde o relatório está salvo
+          retention-days: 3 # Define que o artifact expira em 3 dias
