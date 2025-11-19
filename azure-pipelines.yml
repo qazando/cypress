@@ -2,7 +2,7 @@ trigger:
 - main   # ou o nome da sua branch
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default'   # nome do Agent Pool onde seu agente está registrado
 
 steps:
 - task: NodeTool@0
