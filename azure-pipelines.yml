@@ -1,25 +1,21 @@
 trigger:
-- main   # ou o nome da sua branch
+- main
 
 pool:
-  name: 'Default'   # seu Self-Hosted Agent
+  name: 'Default'        # usa seu agente self-hosted
 
 steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
-  displayName: 'Use Node.js 18'
+  displayName: 'Install Node.js'
 
 - script: |
     echo "📦 Instalando dependências..."
     npm ci
+  displayName: 'npm ci'
 
-    echo "🔍 Verificando instalação do Cypress..."
-    npx cypress verify
-
-    echo "📥 Instalando Cypress (se necessário)..."
-    npx cypress install
-
-    echo "🚀 Executando testes Cypress..."
+- script: |
+    echo "🚀 Rodando testes E2E com Cypress..."
     npx cypress run --browser chrome
-  displayName: 'Install deps and run Cypress'
+  displayName: 'run e2e tests'
