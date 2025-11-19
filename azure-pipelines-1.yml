@@ -1,0 +1,25 @@
+trigger:
+- main   # ou o nome da sua branch
+
+pool:
+  name: 'Default'   # seu Self-Hosted Agent
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Use Node.js 18'
+
+- script: |
+    echo "📦 Instalando dependências..."
+    npm ci
+
+    echo "🔍 Verificando instalação do Cypress..."
+    npx cypress verify
+
+    echo "📥 Instalando Cypress (se necessário)..."
+    npx cypress install
+
+    echo "🚀 Executando testes Cypress..."
+    npx cypress run --browser chrome
+  displayName: 'Install deps and run Cypress'
